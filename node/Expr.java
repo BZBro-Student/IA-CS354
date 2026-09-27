@@ -1,7 +1,7 @@
 package node;
 
 /**
- * TODO:
+ * Expr Node is a Node representation of an Expression in a parse tree
  */
 public class Expr extends Node {
 

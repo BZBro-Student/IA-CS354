@@ -3,7 +3,7 @@ package node;
 import syntax.*;
 
 /**
- * TODO:
+ * Addop Node is a Node representation of an Addop in a parse tree
  */
 public class Addop extends Node {
 

@@ -1,7 +1,9 @@
 package node;
 
-import syntax.Token;
 
+/**
+ * Fact Par Exp Par Node 
+ */
 public class FactParExpPar extends Fact{
     protected Expr expr;
 

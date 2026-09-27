@@ -3,7 +3,7 @@ package node;
 import java.lang.reflect.Field;
 
 /**
- *
+ * Node abstract class
  */
 public abstract class Node {
 

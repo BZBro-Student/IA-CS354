@@ -2,6 +2,9 @@ package node;
 
 import syntax.Token;
 
+/**
+ * Mulop Node 
+ */
 public class Mulop extends Node {
     protected Token mulop;
 

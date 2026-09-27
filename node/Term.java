@@ -1,7 +1,7 @@
 package node;
 
 /**
- * TODO:
+ * Term Node
  */
 public class Term extends Node {
 
