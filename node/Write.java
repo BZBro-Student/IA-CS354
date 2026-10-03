@@ -2,19 +2,19 @@ package node;
 
 import eval.Environment;
 import eval.EvalException;
+import syntax.Token;
 
-/**
- * Fact Par Exp Par Node 
- */
-public class FactParExpPar extends Fact{
+public class Write extends Node{
     protected Expr expr;
-
-    public FactParExpPar(Expr expr) {
+    public Write(Expr expr) {
         this.expr = expr;
-    }
+    } 
 
     @Override
     public double eval(Environment env) throws EvalException {
-        return this.expr.eval(env);
+        double result = expr.eval(env);
+        System.out.println(result);
+        return result;
     }
+
 }

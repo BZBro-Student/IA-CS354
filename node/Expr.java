@@ -1,5 +1,8 @@
 package node;
 
+import eval.Environment;
+import eval.EvalException;
+
 /**
  * Expr Node is a Node representation of an Expression in a parse tree
  */
@@ -34,4 +37,13 @@ public class Expr extends Node {
             this.expr.append(expr);
         }
     }
+    @Override
+    public double eval(Environment env) throws EvalException {
+        double value = term.eval(env);
+        if (addop != null) {
+            return addop.compute(value, expr.eval(env));
+        }
+        return value;
+    }
+
 }

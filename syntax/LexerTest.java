@@ -206,6 +206,12 @@ public class LexerTest {
         assertEquals(new Token("id", "abcd"), lexer.next());
     }
 
+    @Test
+    public void testEquals() throws SyntaxException {
+        String prg = "=";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("=","="), lexer.next());
+    }
 
 
 

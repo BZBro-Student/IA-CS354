@@ -1,5 +1,7 @@
 package node;
 
+import eval.Environment;
+import eval.EvalException;
 import syntax.*;
 
 /**
@@ -14,4 +16,13 @@ public class Addop extends Node {
         this.position = position;
         this.addop = addop;
     }
+
+    public double compute(double op1, double op2) throws EvalException {
+        if ("-".equals(addop.getLexeme())) {
+            return op1 - op2;
+        } else {
+            return op1 + op2;
+        }
+    }
+
 }

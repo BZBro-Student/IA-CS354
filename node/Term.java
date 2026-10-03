@@ -1,5 +1,8 @@
 package node;
 
+import eval.Environment;
+import eval.EvalException;
+
 /**
  * Term Node
  */
@@ -31,4 +34,14 @@ public class Term extends Node {
             this.term.append(term);
         }
     }
+
+    @Override
+    public double eval(Environment env) throws EvalException {
+        double value = fact.eval(env);
+        if (mulop != null) {
+            return mulop.compute(value, term.eval(env));
+        }
+        return value;
+    }
+
 }

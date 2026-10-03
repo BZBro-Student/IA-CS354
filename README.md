@@ -76,4 +76,4 @@ into the parser. Errors are thrown when expected and it overall seems to work!
 
 ## Sources used
 
-N/A 
+(https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)

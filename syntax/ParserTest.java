@@ -10,9 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ParserTest {
 
     @Test
-    void testIdentifier() throws SyntaxException {
+    void testAssignment() throws SyntaxException {
         Parser parser = new Parser();
-        String prg = "x";
+        String prg = "x = x";
+
+        System.out.println(parser.parse(prg).toString());
+    }
+
+    @Test 
+    void testNegativeNumber() throws SyntaxException {
+        Parser parser = new Parser();
+        String prg = "x = -3";
 
         System.out.println(parser.parse(prg).toString());
     }
@@ -20,7 +28,7 @@ class ParserTest {
     @Test
     void testAddition() throws SyntaxException {
         Parser parser = new Parser();
-        String prg = "x + 3";
+        String prg = "wr x + 3";
 
         System.out.println(parser.parse(prg).toString());
     }
@@ -28,7 +36,7 @@ class ParserTest {
     @Test
     void testSubtraction() throws SyntaxException {
         Parser parser = new Parser();
-        String prg = "10-4-3";
+        String prg = "wr 10-4-3";
 
         System.out.println(parser.parse(prg).toString());
     }
@@ -36,7 +44,7 @@ class ParserTest {
     @Test
     void testComplexEquation() throws SyntaxException {
         Parser parser = new Parser();
-        String prg = "(x+2) / 4";
+        String prg = "x = (x+2) / 4; wr x";
 
         System.out.println(parser.parse(prg).toString());
     }
@@ -44,7 +52,7 @@ class ParserTest {
     @Test
     void testParenthesis() throws SyntaxException {
         Parser parser = new Parser();
-        String prg = "((x))";
+        String prg = "wr ((x))";
 
         System.out.println(parser.parse(prg).toString());
     }
@@ -76,6 +84,17 @@ class ParserTest {
 
         Parser parser = new Parser();
         String prg = "x+ -3";
+
+        assertThrows(SyntaxException.class, () -> {
+            parser.parse(prg);
+        });
+    }
+
+    @Test
+    void testSyntax_4() {
+
+        Parser parser = new Parser();
+        String prg = "x";
 
         assertThrows(SyntaxException.class, () -> {
             parser.parse(prg);

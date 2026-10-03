@@ -34,7 +34,7 @@ public class Lexer {
     }
 
     private void initKeywords(Set<String> keywords2) {
-        // .... no keywords yet
+        keywords2.add("wr");
     }
 
     private void initComments(Set<String> c) {

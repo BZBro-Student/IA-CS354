@@ -1,5 +1,7 @@
 package node;
 
+import eval.Environment;
+import eval.EvalException;
 import syntax.Token;
 
 /**
@@ -10,4 +12,10 @@ public class FactID extends Fact{
     public FactID(Token token) {
         this.id = token;
     }
+
+    @Override
+    public double eval(Environment env) throws EvalException {
+        return env.get(this.position, id.getLexeme());
+    }
+
 }

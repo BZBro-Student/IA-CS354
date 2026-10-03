@@ -2,6 +2,9 @@ package node;
 
 import java.lang.reflect.Field;
 
+import eval.Environment;
+import eval.EvalException;
+
 /**
  * Node abstract class
  */
@@ -12,8 +15,11 @@ public abstract class Node {
     protected static int indent = 0;
 
     /**
-     * From <a href="http://www.javapractices.com/topic/TopicAction.do?Id=55">...</a>
-     * Using reflection to recursively print each member of each subclass in the tree.
+     * From
+     * <a href="http://www.javapractices.com/topic/TopicAction.do?Id=55">...</a>
+     * Using reflection to recursively print each member of each subclass in the
+     * tree.
+     * 
      * @return a string of parenthesised tree nodes.
      */
     public String toString() {
@@ -21,10 +27,10 @@ public abstract class Node {
 
         result.append(this.getClass().getName());
 
-        //determine fields declared in this class only (no fields of superclass)
+        // determine fields declared in this class only (no fields of superclass)
         Field[] fields = this.getClass().getDeclaredFields();
 
-        //print field names paired with their values
+        // print field names paired with their values
         for (Field field : fields) {
             result.append("\n");
             indent++;
@@ -34,7 +40,7 @@ public abstract class Node {
             try {
                 result.append(" " + field.getName());
                 result.append(": ");
-                //requires access to private field:
+                // requires access to private field:
                 result.append(field.get(this));
             } catch (IllegalAccessException ex) {
                 System.out.println(ex);
@@ -44,4 +50,9 @@ public abstract class Node {
 
         return result.toString();
     }
+
+    public double eval(Environment env) throws EvalException {
+        throw new EvalException(position, "cannot eval() node!");
+    }
+
 }

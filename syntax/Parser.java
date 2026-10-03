@@ -21,9 +21,9 @@ public class Parser {
     public Node parse(String program) throws SyntaxException {
         lexer = new Lexer(program);
         lookahead = lexer.next(); // "prime the pump"
-        Expr expr = parseExpr();
+        Block block = parseBlock();
         match("EOF");
-        return expr;
+        return block;
     }
 
     /**
@@ -41,6 +41,65 @@ public class Parser {
             Expr expr = parseExpr();
             expr.append(new Expr(term, addop, null));
             return expr;
+        }
+    }
+
+    /**
+     * @return Block
+     * @throws SyntaxException
+     */
+    private Block parseBlock() throws SyntaxException {
+        Stmt stmt = parseStmt();
+        Token current = lookahead;
+
+        if (current.equalType(new Token(";"))) {
+            match(";");
+            Block block = parseBlock();
+            return new Block(stmt, block);
+        } else {
+            return new Block(stmt);
+        }
+
+    }
+
+    /**
+     * @return Stmt
+     * @throws SyntaxException
+     */
+    private Stmt parseStmt() throws SyntaxException {
+        Token current = lookahead;
+        Assn assn = parseAssn();
+        if (assn == null) {
+            if (current.equalType(new Token("wr"))) {
+                match("wr");
+                Write wr = parseWrite(parseExpr());
+                return new Stmt(wr);
+            } else {
+                throw new SyntaxException(lexer.getPosition(), current, current);
+            }
+        } else {
+            return new Stmt(assn);
+        }
+
+    }
+
+    private Write parseWrite(Expr expr) throws SyntaxException {
+        return new Write(expr);
+    }
+
+    private Assn parseAssn() throws SyntaxException {
+        Token current = lookahead;
+        if (!current.equalType(new Token("id"))) {
+            return null;
+        }
+        Fact fact = parseFact();
+        current = lookahead;
+        if (current.equalType(new Token("="))) {
+            match("=");
+            Expr expr = parseExpr();
+            return new Assn(fact, expr);
+        } else {
+            throw new SyntaxException(lexer.getPosition(), current, current);
         }
     }
 
@@ -82,6 +141,10 @@ public class Parser {
             Expr expr = parseExpr();
             match(")");
             return new FactParExpPar(expr);
+        } else if (current.equalType(new Token("-"))) {
+            match("-");
+            return new NegFact(current, parseFact());
+
         } else {
             throw new SyntaxException(lexer.getPosition(), current, current);
         }
