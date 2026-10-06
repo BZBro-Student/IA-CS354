@@ -34,6 +34,39 @@ class EvaluationTest {
     }
 
     @Test
+    void testAssignmentAdd() throws SyntaxException, EvalException{
+        String prg = "x = 2; y = 4; wr x + y";
+
+        double evaluation = parser.parse(prg).eval(env);
+        assertEquals(6, evaluation);
+    }
+
+    @Test
+    void testAssignmentSub() throws SyntaxException, EvalException{
+        String prg = "x = 2; y = 4; wr x - y";
+
+        double evaluation = parser.parse(prg).eval(env);
+        assertEquals(-2, evaluation);
+    }
+
+    @Test
+    void testAssignmentMul() throws SyntaxException, EvalException{
+        String prg = "x = 2; y = 4; wr x * y";
+
+        double evaluation = parser.parse(prg).eval(env);
+        assertEquals(8, evaluation);
+    }
+
+    @Test
+    void testAssignmentMulNeg() throws SyntaxException, EvalException{
+        String prg = "x = 2; y = 4; wr x * -y";
+
+        double evaluation = parser.parse(prg).eval(env);
+        assertEquals(-8, evaluation);
+    }
+
+
+    @Test
     void testEvalError() throws SyntaxException {
 
         String prg = "wr x";
@@ -53,10 +86,20 @@ class EvaluationTest {
     }
 
     @Test
-    void testPrecedence() throws SyntaxException, EvalException{
+    void testPrecedenceDiv() throws SyntaxException, EvalException{
         String prg = "wr 6 / (10 - 8)";
 
         double evaluation = parser.parse(prg).eval(env);
         assertEquals(3, evaluation);
     }
+
+    @Test
+    void testPrecedenceSub() throws SyntaxException, EvalException{
+        String prg = "wr 10 - (4 - 3)";
+
+        double evaluation = parser.parse(prg).eval(env);
+        assertEquals(9, evaluation);
+    }
+
+    
 }

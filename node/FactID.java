@@ -12,6 +12,10 @@ public class FactID extends Fact{
     public FactID(Token token) {
         this.id = token;
     }
+    @Override 
+    public String getLexeme() {
+        return id.getLexeme();
+    }
 
     @Override
     public double eval(Environment env) throws EvalException {

@@ -15,7 +15,7 @@ public class Assn extends Node {
     @Override
     public double eval(Environment env) throws EvalException {
         double value = expr.eval(env);
-        env.put(id.toString(),value);
+        env.put(id.getLexeme(),value);
         return value;
     }
 

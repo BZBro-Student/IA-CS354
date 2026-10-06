@@ -15,6 +15,11 @@ public class FactNum extends Fact {
     
     @Override
     public double eval(Environment env) throws EvalException {
-        return env.get(this.position, num.getLexeme());
+        return Double.parseDouble(num.getLexeme());
+    }
+ 
+    @Override
+    public String getLexeme() {
+        return num.getLexeme();        
     }
 }

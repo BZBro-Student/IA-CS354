@@ -18,11 +18,16 @@ public class Addop extends Node {
     }
 
     public double compute(double op1, double op2) throws EvalException {
-        if ("-".equals(addop.getLexeme())) {
-            return op1 - op2;
-        } else {
-            return op1 + op2;
+        try {
+            if ("-".equals(addop.getLexeme())) {
+                return op2 - op1;
+            } else {
+                return op1 + op2;
+            }
+        } catch (Exception e) {
+            throw new EvalException(position, "Invalid Operation");
         }
+
     }
 
 }

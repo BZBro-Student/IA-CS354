@@ -14,7 +14,8 @@ public class Environment {
      * @return
      */
     public double put(String var, double val) {
-      	return envHashMap.put(var, val);
+      	envHashMap.put(var, val);
+        return val;
     }
 
     /**

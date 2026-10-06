@@ -17,7 +17,7 @@ public class Mulop extends Node {
 
     public double compute(double op1, double op2) throws EvalException {
         if ("/".equals(mulop.getLexeme())) {
-            return op1 / op2;
+            return op2 / op1;
         } else {
             return op1 * op2;
         }
