@@ -1,6 +1,5 @@
 package node;
 
-import eval.EvalException;
 import syntax.Token;
 
 /**
@@ -15,7 +14,7 @@ public class Mulop extends Node {
         this.mulop = mulop;
     }
 
-    public double compute(double op1, double op2) throws EvalException {
+    public double compute(double op1, double op2) {
         if ("/".equals(mulop.getLexeme())) {
             return op2 / op1;
         } else {

@@ -2,7 +2,6 @@ package node;
 
 import eval.Environment;
 import eval.EvalException;
-import syntax.Token;
 
 public class Write extends Node{
     protected Expr expr;

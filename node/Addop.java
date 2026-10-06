@@ -1,6 +1,5 @@
 package node;
 
-import eval.Environment;
 import eval.EvalException;
 import syntax.*;
 
@@ -25,7 +24,7 @@ public class Addop extends Node {
                 return op1 + op2;
             }
         } catch (Exception e) {
-            throw new EvalException(position, "Invalid Operation");
+            throw new EvalException(this.position, "Invalid Operation");
         }
 
     }

@@ -11,9 +11,9 @@ import java.nio.file.Paths;
  */
 public class Interpreter {
 
-    private static final String EXIT_CMD = "exit"; //TODO: add your own command
-    private static final String CLEAR_CMD = "clear"; //TODO: add your own command
-    private static final String PROMPT = ":D"; //TODO: add your own command
+    private static final String EXIT_CMD = "e"; 
+    private static final String CLEAR_CMD = "c"; 
+    private static final String PROMPT = "=>"; 
 
     private static void repl() {
 
@@ -34,10 +34,10 @@ public class Interpreter {
                 line = scan.nextLine();
                 switch (line) {
                     case EXIT_CMD:
-                        System.out.println("leaving the funzone"); //TODO, add you own comment!
+                        System.out.println("Exiting"); 
                         System.exit(0);
                     case CLEAR_CMD:
-                        System.out.println("deleting system_32 ... jk"); //TODO, add you own comment!
+                        System.out.println("Cleaning Up"); 
                         env = new Environment();
                         break;
                     default:

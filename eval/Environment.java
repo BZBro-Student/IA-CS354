@@ -1,6 +1,5 @@
 package eval;
 import java.util.HashMap;
-import java.util.Map;
 /**
  * A referencing environment for bindings
  */
