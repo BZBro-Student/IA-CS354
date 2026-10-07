@@ -17,6 +17,11 @@ on.
 This program takes a token stream from the Lexer and creates a parse tree from it. The parse tree can
 be printed to the console for testing.
 
+### Part 3: Interpreter
+
+This program takes a parse tree and evaluates it while preserving precedence and associativity. Assignment, 
+arithmetic, and logging to the console are possible. Code is put into blocks seperated by ";".
+
 ## Reflection
 
 ### Part 1: Lexical Analysis
@@ -62,6 +67,36 @@ and determining correct order especially with parenthesis. ((x) would not throw 
 to the issue above I think? I can't fully remember as I did this a week ago. I eventually got it to break, but in the good expected
 way which is great. The assignment was pretty great and easy to work through.
 
+### Part 3: Interpretation
+
+This assignment was a bit harder. The given grammar was easy to follow and instructions were easy to work through but the getting the
+whole thing to work was less than ideal to say the least. A lot of errors meant a lot of digging through the debugger breakpoints. Eventually
+I was able to work through the debugger to find most issues. The biggest issue was the environment mainly, I used a HashMap because it has quick
+lookup and operates on key value pairs. Perfect for whats needed. Only issue with that is I forgot that the toString for nodes doesn't get the 
+internal value. This really only matters for FactID and other Facts whos distinct values matter for evaluation. I made a getLexeme method to get
+the internal value held by the node so that the HashMap key was the string representation of the Lexeme.
+Once I got that fixed I could run the program without issue, but the result of arithmetic both subtraction and division was wrong. I spent an embarrasingly
+long time figuring out the issue. Associativity was the main issue for some reason somewhere my program was evaluating expressions in reverse order. 
+I could not pin it down for the life of me and then I consulted Andre and it was explained that while my expr eval logic was correct I forgot to account for
+the order that - and / are evaluated. Literally just changing the order of operations:
+
+```java
+
+
+Incorrect:
+
+op1 / op2
+
+op1 - op2
+
+Corrected:
+op2 / op1
+
+op2 - op1
+
+```
+Overall, not the worse but definitely a bit harder. I was able to get it working though which is a big hurray!
+
 ## Results
 
 ### Part 1: Lexical Analysis
@@ -73,6 +108,10 @@ expected behavior.
 ### Part 2: Parsing
 All tests pass and output shows as expected based on what my expected parse tree looked like for the programs I was passing 
 into the parser. Errors are thrown when expected and it overall seems to work! 
+
+### Part 3: Interpretation
+All tests passed including self made tests. Adjustments were made to the parser tests to accomadate the new grammar. 
+Errors look to be thrown when the interpretor fails or comes across an invalid character.
 
 ## Sources used
 
