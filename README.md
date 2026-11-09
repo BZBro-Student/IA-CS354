@@ -139,7 +139,7 @@ occur when expected.
 
 ## Sources used
 
-(https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)
+https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html
 https://www.geeksforgeeks.org/r-language/calculate-the-factorial-of-a-number-using-loop/
 https://en.wikipedia.org/wiki/Dot_product
 
