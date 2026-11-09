@@ -68,22 +68,68 @@ public class Parser {
      */
     private Stmt parseStmt() throws SyntaxException {
         Token current = lookahead;
-        Assn assn = parseAssn();
-        if (assn == null) {
-            if (current.equalType(new Token("wr"))) {
-                match("wr");
-                Write wr = parseWrite(parseExpr());
-                return new Stmt(wr);
-            } else {
-                throw new SyntaxException(lexer.getPosition(), current, current);
-            }
-        } else {
-            return new Stmt(assn);
-        }
+        String lexeme = current.getLexeme();
 
+        if (lexeme.equals("rd")) {
+            match("rd");
+            Fact factID = parseFact();
+            return new Stmt(new Read(factID));
+
+        } else if (lexeme.equals("wr")) {
+            match("wr");
+            Expr expr = parseExpr();
+            Write wr = parseWrite(expr);
+            return new Stmt(wr);
+
+        } else if (lexeme.equals("if")) {
+            match("if");
+            BoolExpr boolExpr = parseBoolExpr();
+
+            Token thenToken = lookahead;
+            match("then");
+            ThenStmt thenStmtMarker = new ThenStmt(lexer.getPosition(),thenToken);
+
+            Stmt thenStmt = parseStmt();
+
+            if (lookahead != null && lookahead.getLexeme().equals("else")) {
+                Token elseToken = lookahead;
+                match("else");
+                ElseStmt elseStmtMarker = new ElseStmt(lexer.getPosition(),elseToken);
+
+                Stmt elseStmt = parseStmt();
+                return new Stmt(new IfStmt(boolExpr, thenStmtMarker, thenStmt, elseStmtMarker, elseStmt));
+            } else {
+                return new Stmt(new IfStmt(boolExpr, thenStmtMarker, thenStmt));
+            }
+
+        } else if (lexeme.equals("while")) {
+            match("while");
+            BoolExpr boolExpr = parseBoolExpr();
+
+            Token doToken = lookahead;
+            match("do");
+            DoStmt doStmtMarker = new DoStmt(lexer.getPosition(), doToken);
+
+            Stmt stmt = parseStmt();
+            return new Stmt(new WhileStmt(boolExpr, doStmtMarker, stmt));
+
+        } else if (lexeme.equals("begin")) {
+            match("begin");
+            Block block = parseBlock();
+            match("end");
+            return new Stmt(block);
+
+        } else {
+            Assn assn = parseAssn();
+            if (assn != null) {
+                return new Stmt(assn);
+            } else {
+                throw new SyntaxException(lexer.getPosition(), null, current);
+            }
+        }
     }
 
-    private Write parseWrite(Expr expr) throws SyntaxException {
+    private Write parseWrite(Expr expr) {
         return new Write(expr);
     }
 
@@ -99,7 +145,7 @@ public class Parser {
             Expr expr = parseExpr();
             return new Assn(fact, expr);
         } else {
-            throw new SyntaxException(lexer.getPosition(), current, current);
+            throw new SyntaxException(lexer.getPosition(), new Token("="), current);
         }
     }
 
@@ -146,7 +192,7 @@ public class Parser {
             return new NegFact(current, parseFact());
 
         } else {
-            throw new SyntaxException(lexer.getPosition(), current, current);
+            throw new SyntaxException(lexer.getPosition(), null, current);
         }
     }
 
@@ -197,5 +243,29 @@ public class Parser {
         } else {
             throw new SyntaxException(lexer.getPosition(), new Token(s), lookahead);
         }
+    }
+
+    /**
+     * @return BoolExpr node
+     * @throws SyntaxException
+     */
+    private BoolExpr parseBoolExpr() throws SyntaxException {
+        Expr leftExpr = parseExpr();
+        Relop relop = parseRelop();
+        Expr rightExpr = parseExpr();
+        return new BoolExpr(leftExpr,relop,rightExpr);
+    }
+
+    private Relop parseRelop() throws SyntaxException {
+        Token relop = lookahead;
+        String relopString = relop.getLexeme();
+
+        if (relopString.equals("<") || relopString.equals("<=") || relopString.equals("<>") ||
+            relopString.equals(">") || relopString.equals(">=") || relopString.equals("==")) {
+                match(relopString);
+                return new Relop(lexer.getPosition(),relop);
+            } else {
+                throw new SyntaxException(lexer.getPosition(), null, relop);
+            }
     }
 }

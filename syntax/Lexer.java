@@ -35,6 +35,14 @@ public class Lexer {
 
     private void initKeywords(Set<String> keywords2) {
         keywords2.add("wr");
+        keywords2.add("rd");
+        keywords2.add("if");
+        keywords2.add("then");
+        keywords2.add("else");
+        keywords2.add("while");
+        keywords2.add("do");
+        keywords2.add("begin");
+        keywords2.add("end");
     }
 
     private void initComments(Set<String> c) {
@@ -61,6 +69,12 @@ public class Lexer {
         o.add("=");
         o.add("(");
         o.add(")");
+        o.add("<");
+        o.add(">");
+        o.add("==");
+        o.add(">=");
+        o.add("<=");
+        o.add("<>");
     }
 
     private void fill(Set<String> s, char lo, char hi) {
@@ -89,8 +103,16 @@ public class Lexer {
 
     private Token nextKwOp() {
         int old = this.position;
-
         advance();
+
+        if (hasChar()) {
+            String lexeme = program.substring(old, position + 1);
+            if (operators.contains(lexeme)) {
+                advance();
+                return new Token(lexeme,lexeme);
+            }
+        }
+
         String lexeme = program.substring(old, position);
         return new Token(lexeme, lexeme);
     }
@@ -133,7 +155,7 @@ public class Lexer {
         if (Objects.equals(peek(), "#")) {
             advance();
             while (!Objects.equals(peek(), "#") && !Objects.equals(peek(), "\n")) {
-                advance(); 
+                advance();
             }
         } else if (Objects.equals(peek(), "`")) {
             advance();

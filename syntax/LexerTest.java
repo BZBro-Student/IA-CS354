@@ -48,8 +48,6 @@ public class LexerTest {
         assertEquals(new Token("EOF", "EOF"), lexer.next());
     }
 
-    
-
     @Test
     public void testOneDec() throws SyntaxException {
 
@@ -77,7 +75,6 @@ public class LexerTest {
         assertEquals(new Token("num", "3"), lexer.next());
         assertEquals(new Token("EOF", "EOF"), lexer.next());
     }
-    
 
     @Test
     public void testTwoDecOneNumber() throws SyntaxException {
@@ -114,7 +111,7 @@ public class LexerTest {
         assertEquals(new Token("EOF", "EOF"), lexer.next());
     }
 
-    @Test 
+    @Test
     public void testIDWithNum() throws SyntaxException {
         String prg = "a1bcd";
         Lexer lexer = new Lexer(prg);
@@ -183,14 +180,14 @@ public class LexerTest {
         assertEquals(new Token("id", "abcd"), lexer.next());
         assertEquals(new Token("EOF", "EOF"), lexer.next());
     }
-    
+
     @Test
     public void testBlockCommentOneLine() throws SyntaxException {
         String prg = "`hello`";
         Lexer lexer = new Lexer(prg);
         assertEquals(new Token("EOF", "EOF"), lexer.next());
     }
-    
+
     @Test
     public void testBlockCommentTwoLine() throws SyntaxException {
         String prg = "`hello\nworld\nthe\nworld\nsays\nhello`";
@@ -198,7 +195,7 @@ public class LexerTest {
         assertEquals(new Token("EOF", "EOF"), lexer.next());
     }
 
-    @Test 
+    @Test
     public void testIllegalCharacter() throws SyntaxException {
         String prg = "@abcd";
         Lexer lexer = new Lexer(prg);
@@ -209,9 +206,105 @@ public class LexerTest {
     public void testEquals() throws SyntaxException {
         String prg = "=";
         Lexer lexer = new Lexer(prg);
-        assertEquals(new Token("=","="), lexer.next());
+        assertEquals(new Token("=", "="), lexer.next());
     }
 
+    @Test
+    public void testEquality() throws SyntaxException {
+        String prg = "==";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("==", "=="), lexer.next());
+    }
 
+    @Test
+    public void testNotEquality() throws SyntaxException {
+        String prg = "<>";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("<>", "<>"), lexer.next());
+    }
+
+    @Test
+    public void testLT() throws SyntaxException {
+        String prg = "<";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("<", "<"), lexer.next());
+    }
+
+    @Test
+    public void testGT() throws SyntaxException {
+        String prg = ">";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token(">", ">"), lexer.next());
+    }
+
+    @Test
+    public void testLTET() throws SyntaxException {
+        String prg = "<=";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("<=", "<="), lexer.next());
+    }
+
+    @Test
+    public void testGTET() throws SyntaxException {
+        String prg = ">=";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token(">=", ">="), lexer.next());
+    }
+
+    @Test
+    public void testRead() throws SyntaxException {
+        String prg = "rd";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("rd", "rd"), lexer.next());
+    }
+
+    @Test
+    public void testIf() throws SyntaxException {
+        String prg = "if";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("if", "if"), lexer.next());
+    }
+
+    @Test
+    public void testThen() throws SyntaxException {
+        String prg = "then";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("then", "then"), lexer.next());
+    }
+
+    @Test
+    public void testElse() throws SyntaxException {
+        String prg = "else";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("else", "else"), lexer.next());
+    }
+
+    @Test
+    public void testWhile() throws SyntaxException {
+        String prg = "while";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("while", "while"), lexer.next());
+    }
+
+    @Test
+    public void testDo() throws SyntaxException {
+        String prg = "do";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("do", "do"), lexer.next());
+    }
+
+    @Test
+    public void testBegin() throws SyntaxException {
+        String prg = "begin";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("begin", "begin"), lexer.next());
+    }
+
+    @Test
+    public void testEnd() throws SyntaxException {
+        String prg = "end";
+        Lexer lexer = new Lexer(prg);
+        assertEquals(new Token("end", "end"), lexer.next());
+    }
 
 }
