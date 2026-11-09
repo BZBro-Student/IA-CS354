@@ -22,6 +22,11 @@ be printed to the console for testing.
 This program takes a parse tree and evaluates it while preserving precedence and associativity. Assignment, 
 arithmetic, and logging to the console are possible. Code is put into blocks seperated by ";".
 
+### Part 4: Control Flow
+
+This program extends the interpreters original functionality to allow for control flow such as 
+if then else, while do, rd, and begin.
+
 ## Reflection
 
 ### Part 1: Lexical Analysis
@@ -97,6 +102,21 @@ op2 - op1
 ```
 Overall, not the worse but definitely a bit harder. I was able to get it working though which is a big hurray!
 
+### Part 4: Control Flow
+
+A bulk of this assignment is the same old same old. I began by adding the new grammar words such as rd, if, then, etc to the lexer. I also added the relop operators 
+to the lexer as well by adding it to the operator HashSet (remember this for later). After adding to the lexer I began creating the new nodes such as boolexpr, rd, and 
+place holder nodes like IfStmt, DoStmt, ThenStmt, etc. I also adjusted existing nodes that were modified by the grammar change so literally just stmt. All of this was 
+admittedly super easy. The only one that was a bit interesting was Relop as the compute logic was a little bit interesting. Once all of the nodes were done I began modifying 
+the parser logic.
+
+The Parser admittedly was the majority of the time for this project as the parseStmt function essentially needed a full rewrite since we went from 2 possibilities to a whole bunch more. 
+Getting this working was interesting as when testing it a kept getting a weird error. I was simply just using current.toString rather than getLexeme which caused the expected output to be
+different from the actual output, super easy fix. Parse relop was easy to get working, and parseBoolExpr was easy as well. Most of this follows the previous assignment in terms of logic 
+pretty close. Once this was done the program pretty much worked. I did have one issue where my <= <> >= operators would not be lexed correctly. This was because my lexer logic for operators
+did not account for 2 characters. I was able to get it working by modifying the lexing logic. After that I wrote some basic tests, included the tests from the assignment and made sure everything 
+looked to be working as expected.
+
 ## Results
 
 ### Part 1: Lexical Analysis
@@ -113,6 +133,13 @@ into the parser. Errors are thrown when expected and it overall seems to work!
 All tests passed including self made tests. Adjustments were made to the parser tests to accomadate the new grammar. 
 Errors look to be thrown when the interpretor fails or comes across an invalid character.
 
+### Part 4:
+All given and self made tests pass. Lexer, Parser, and Eval tests were modified to check this new feature. Errors
+occur when expected.
+
 ## Sources used
 
 (https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)
+https://www.geeksforgeeks.org/r-language/calculate-the-factorial-of-a-number-using-loop/
+https://en.wikipedia.org/wiki/Dot_product
+
